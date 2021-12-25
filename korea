@@ -9,6 +9,7 @@ if game.PlaceId == 4913581664 then
 
 	ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	ScreenGui.ResetOnSpawn = false
 
 	mainFrame.Name = "mainFrame"
 	mainFrame.Parent = ScreenGui
