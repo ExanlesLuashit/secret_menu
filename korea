@@ -102,8 +102,8 @@ if game.PlaceId == 4913581664 then
 			cartFolder.ChildAdded:Connect(function(child)
 				if string.find(child.Name:lower(), "cart") then hook(child) end
 			end)
-		elseif cmdBox.Text == "Super Idol" then
-		   game.Players.LocalPlayer.Character["SuperFlyGoldBoombox"].Remote:FireServer("PlaySong", 8086605202)
+		elseif cmdBox.Text == "" then
+		   game.Players.LocalPlayer.Character["SuperFlyGoldBoombox"].Remote:FireServer("PlaySong", tonumber(cmdBox.Text))
 		end
 	end)
 
