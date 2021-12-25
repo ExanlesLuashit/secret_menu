@@ -1,0 +1,123 @@
+if game.PlaceId == 4913581664 then
+
+local ScreenGui = Instance.new("ScreenGui")
+local mainFrame = Instance.new("Frame")
+local titleMain = Instance.new("TextLabel")
+local cmdBox = Instance.new("TextBox")
+local submitButton = Instance.new("TextButton")
+local openGui = Instance.new("TextButton")
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+mainFrame.Name = "mainFrame"
+mainFrame.Parent = ScreenGui
+mainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+mainFrame.Position = UDim2.new(0.368000001, 0, 0.629999995, 0)
+mainFrame.Size = UDim2.new(0, 400, 0, 151)
+mainFrame.Style = Enum.FrameStyle.ChatBlue
+mainFrame.Visible = false
+
+titleMain.Name = "titleMain"
+titleMain.Parent = mainFrame
+titleMain.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+titleMain.BackgroundTransparency = 1.000
+titleMain.BorderSizePixel = 0
+titleMain.Position = UDim2.new(0.0324999988, 0, -0.599403679, 0)
+titleMain.Size = UDim2.new(0, 341, 0, 50)
+titleMain.Font = Enum.Font.SourceSansLight
+titleMain.Text = "Cart Ride Fricker v1.0"
+titleMain.TextColor3 = Color3.fromRGB(255, 255, 255)
+titleMain.TextSize = 36.000
+
+cmdBox.Name = "cmdBox"
+cmdBox.Parent = mainFrame
+cmdBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+cmdBox.BorderColor3 = Color3.fromRGB(108, 108, 108)
+cmdBox.BorderSizePixel = 4
+cmdBox.Position = UDim2.new(0.0422630273, 0, 0.0807081014, 0)
+cmdBox.Size = UDim2.new(0, 337, 0, 50)
+cmdBox.Font = Enum.Font.SourceSansBold
+cmdBox.PlaceholderColor3 = Color3.fromRGB(108, 108, 108)
+cmdBox.PlaceholderText = "COMMAND"
+cmdBox.Text = ""
+cmdBox.TextColor3 = Color3.fromRGB(108, 108, 108)
+cmdBox.TextSize = 50.000
+
+submitButton.Name = "submitButton"
+submitButton.Parent = mainFrame
+submitButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+submitButton.BorderSizePixel = 0
+submitButton.Position = UDim2.new(0.167949989, 0, 0.660321951, 0)
+submitButton.Size = UDim2.new(0, 240, 0, 50)
+submitButton.Style = Enum.ButtonStyle.RobloxRoundDefaultButton
+submitButton.Font = Enum.Font.SourceSansBold
+submitButton.Text = "SUBMIT CMD"
+submitButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+submitButton.TextSize = 36.000
+
+openGui.Name = "openGui"
+openGui.Parent = ScreenGui
+openGui.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+openGui.Position = UDim2.new(0, 0, 0.592654407, 0)
+openGui.Size = UDim2.new(0, 248, 0, 69)
+openGui.Style = Enum.ButtonStyle.RobloxRoundDropdownButton
+openGui.Font = Enum.Font.SourceSansBold
+openGui.Text = "SECRET MENU"
+openGui.TextColor3 = Color3.fromRGB(255, 0, 0)
+openGui.TextSize = 28.000
+
+submitButton.MouseButton1Click:Connect(function()
+	if cmdBox.Text == "Admin" then
+		_G.CustomUI = false
+		loadstring(game:HttpGet(('https://raw.githubusercontent.com/mgamingpro/HomebrewAdmin/master/Main'),true))()
+	elseif cmdBox.Text == "Explorer" then
+		loadstring(game:HttpGetAsync("https://pastebin.com/raw/iuQPQq4M"))()
+	elseif cmdBox.Text == "Destroy Carts" then
+		local function hook(cart)
+			pcall(function()
+				cart:WaitForChild("On")
+				cart.On:WaitForChild("Click")
+
+				cart:WaitForChild("Configuration")
+				local onValue = cart.Configuration:WaitForChild("CarOn")
+
+				if onValue.Value == true then
+					fireclickdetector(cart.On.Click, math.random(50,100) / 100)
+				end
+				onValue:GetPropertyChangedSignal("Value"):Connect(function()
+					if onValue.Value == true then
+						fireclickdetector(cart.On.Click, math.random(50,100) / 100)
+					end
+				end)
+			end)
+		end
+
+		local cartFolder
+		for _,v in pairs(workspace:GetChildren()) do if v.Name == "Carts" and not v:FindFirstChildOfClass("Part") then cartFolder = v end end
+
+		for _,cart in pairs(cartFolder:GetChildren()) do
+			if string.find(cart.Name:lower(), "cart") then hook(cart) end
+		end
+		cartFolder.ChildAdded:Connect(function(child)
+			if string.find(child.Name:lower(), "cart") then hook(child) end
+		end)
+	end
+end)
+
+openGui.MouseButton1Click:Connect(function()
+	if mainFrame.Visible == false then
+		mainFrame.Visible = true
+	else
+		mainFrame.Visible = false
+	end
+end)
+
+game:GetService("UserInputService").InputBegan:Connect(function(input)
+	if input.KeyCode == Enum.KeyCode.G then
+		ScreenGui:Destroy()
+	end
+end)
+else
+    game.Players.LocalPlayer:Kick("Script service requests player disconnect.")
+end
